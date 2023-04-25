@@ -28,6 +28,8 @@ from DISClib.ADT import stack as st
 from DISClib.ADT import queue as qu
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
+from datetime import timedelta as td
+import matplotlib.pyplot as plt
 assert cf
 import tabulate
 import traceback
@@ -116,6 +118,34 @@ def tamaño_de_datos():
         print("seleccion invalidad, oprima enter para continuar:")
     return tamaño_datos
 
+def mes_a_num(mes):
+    mes= mes.lower()
+    if mes == "enero":
+        mes=1
+    elif mes == "febrero":
+        mes=2
+    elif mes=="marzo":
+        mes=3
+    elif mes == "abril":
+        mes=4
+    elif mes=="mayo":
+        mes=5
+    elif mes == "junio":
+        mes=6
+    elif mes=="julio":
+        mes=7
+    elif mes == "agosto":
+        mes=8
+    elif mes=="septiembre":
+        mes=9
+    elif mes == "octubre":
+        mes=10
+    elif mes=="noviembre":
+        mes=11
+    else: 
+        mes= 12
+    return mes
+
 
 def print_data(control, id):
     """
@@ -176,8 +206,67 @@ def print_req_7(control):
     """
         Función que imprime la solución del Requerimiento 7 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 7
-    pass
+    anio= input("Ingrese el año: ")
+    mes= input("Ingrese el mes: ")
+    mes_2= mes_a_num(mes)
+    lista, tabla= controller.req_7(control, anio, mes_2)
+    
+    for dia in lt.iterator(lista):
+        fecha = lt.firstElement(dia)
+        fecha = fecha["FECHA_OCURRENCIA_ACC"]
+        print("Los accidentes del día " + str(fecha))
+        lista=[]
+        for dato in lt.iterator(dia):
+            dicc={
+            "CODIGO_ACCIDENTE": data["CODIGO_ACCIDENTE"],
+            "DIA_OCURRENCIA_ACC": data["DIA_OCURRENCIA_ACC"],
+            "Dirección": data["DIRECCION"],
+            "Gravedad" : data["GRAVEDAD"],
+            "Clase de accidente": data["CLASE_ACC"],
+            "LOCALIDAD": data["LOCALIDAD"],
+            "FECHA_HORA_ACC": data["FECHA_HORA_ACC"],
+            "Latitud": data["LATITUD"],
+            "Longitud": data["LONGITUD"]
+            
+            }
+            lista.append(dicc)
+            
+        header = lista[0].keys()
+        rows =  [x.values() for x in lista]
+        print(tabulate.tabulate(rows,header,tablefmt="grid",maxcolwidths= 10,maxheadercolwidths=6))
+        
+    size_horas= contar_horas(tabla)
+    dicc={}
+    for i in range(24):
+        time= td(hours=i)
+        dicc[str(time)]=0
+    keys= mp.keySet(tabla)
+    for key in keys:
+        valor=mp.get(tabla, key)
+        valor= me.getValue(valor)
+        time= td(hours=key)
+        dicc[str(time)]= valor
+        
+    names = list(dicc.keys())
+    values = list(dicc.values())
+    plt.figure(figsize=(10,10))
+    plt.bar(range(len(dicc)), values, tick_label=names)       
+
+    
+    plt.title('Frecuencia de '+ str(size_horas)+ " accidentes por hora del día "+ " para el mes de "+ str(mes)+ " de "+ str(anio))
+    plt.xlabel('Hora del día')
+    plt.xticks(fontsize=7, rotation=90)
+    plt.ylabel('Número de accidentes')
+    plt.show()
+    
+def contar_horas(tabla):
+    values=mp.valueSet(tabla)
+    size=0
+    for dato in lt.iterator(values):
+        size+=dato
+        
+    return size
+    
 
 
 def print_req_8(control):

@@ -144,14 +144,14 @@ def req_6(control):
     pass
 
 
-def req_7(control):
+def req_7(control, anio, mes):
     """
     Retorna el resultado del requerimiento 7
     """
     # TODO: Modificar el requerimiento 7
     start_time = get_time()
-
-    pass
+    lista, tabla= model.req_7(control["model"], anio, mes)
+    return lista, tabla
 
 
 def req_8(control):

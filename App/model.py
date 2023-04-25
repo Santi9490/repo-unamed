@@ -136,6 +136,7 @@ def new_data_fecha(id, info):
     """
     #TODO: Crear la función para estructurar los datos
     
+    
     entry = {"fecha": id,
              "accidentes": None
              }
@@ -213,12 +214,56 @@ def req_6(data_structs):
     pass
 
 
-def req_7(data_structs):
+def req_7(data_structs, anio, mes):
     """
     Función que soluciona el requerimiento 7
     """
-    # TODO: Realizar el requerimiento 7
-    pass
+    data_structs=data_structs["fechaIndice"]
+    fecha_inc= anio+"/"+str(mes)+"/01"
+    fecha_fin= anio+"/"+str(mes)+"/30"
+    fecha_inc= datetime.datetime.strptime(fecha_inc, "%Y/%m/%d")
+    fecha_fin=datetime.datetime.strptime(fecha_fin, "%Y/%m/%d")
+    values= om.values(data_structs, fecha_inc, fecha_fin)
+    values= me.getValue(values)
+    arbol_datos = om.newMap("RBT",
+                compare_2)
+    tabla_hora = mp.newMap(24,
+                maptype='PROBING',
+                loadfactor=0.5,
+                cmpfunction=compare_2)
+    lista_may_men=lt.newList(datastructure="ARRAY_LIST")
+    for dia in lt.iterator(values):
+        dia=sort_req_7(dia)
+        primero= lt.firstElement(dia)
+        dia= sort_req_7_2(dia)
+        ultimo= lt.firstElement(dia)
+        lt.addLast(lista_may_men, primero)
+        lt.addLast(lista_may_men, ultimo)
+        om.put(arbol_datos, primero["FECHA_OCURRENCIA_ACC"], lista_may_men)
+        
+        for data in lt.iterator(dia):
+            hora=data["FECHA_HORA_ACC"].split(" ")
+            hora=hora[1]
+            hora=hora.split(":")
+            hora= int(hora[0])
+            if om.contains(tabla_hora, hora):
+                entry= om.get(tabla_hora, hora)
+                entry= me.getValue(entry)
+                entry+=1
+                om.put(tabla_hora, hora, entry)
+            else:
+                om.put(tabla_hora, hora, 1)
+        lista_may_men=lt.newList(datastructure="ARRAY_LIST")
+        
+        datos= om.valueSet(arbol_datos)
+        
+        return me.getValue(datos), tabla_hora 
+            
+        
+    
+    
+    
+
 
 
 def req_8(data_structs):
@@ -242,6 +287,14 @@ def compare(data_1, data_2):
         return 1
     else:
         return -1
+    
+def compare_2(data_1, data_2):
+    if data_1 > data_2:
+        return 1
+    elif data_1 < data_2:
+        return -1
+    else:
+        return 0
 
 # Funciones de ordenamiento
 
@@ -260,9 +313,39 @@ def sort_criteria(data_1, data_2):
     pass
 
 
-def sort(data_structs):
+def sort_req_7(data_structs):
     """
     Función encargada de ordenar la lista con los datos
     """
-    #TODO: Crear función de ordenamiento
-    pass
+    data_structs=merg.sort(data_structs, sort_ord_req_7)
+    return data_structs
+
+def sort_ord_req_7(data_1, data_2):
+    """
+    Función encargada de ordenar la lista con los datos
+    """
+    if data_1["FECHA_HORA_ACC"]<data_2["FECHA_HORA_ACC"]:
+        return True
+    elif data_1["FECHA_HORA_ACC"] ==data_2["FECHA_HORA_ACC"]:
+        return data_1["CODIGO_ACCIDENTE"]>data_2["CODIGO_ACCIDENTE"]
+    else: return False
+    
+def sort_req_7_2(data_structs):
+    """
+    Función encargada de ordenar la lista con los datos
+    """
+    data_structs=merg.sort(data_structs, sort_ord_req_7_2)
+    return data_structs
+
+def sort_ord_req_7_2(data_1, data_2):
+    """
+    Función encargada de ordenar la lista con los datos
+    """
+    if data_1["FECHA_HORA_ACC"]>data_2["FECHA_HORA_ACC"]:
+        return True
+    elif data_1["FECHA_HORA_ACC"] ==data_2["FECHA_HORA_ACC"]:
+        return data_1["CODIGO_ACCIDENTE"]>data_2["CODIGO_ACCIDENTE"]
+    else: return False
+    
+    
+    
