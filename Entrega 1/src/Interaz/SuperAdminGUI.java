@@ -2,6 +2,9 @@ package Interaz;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import aplicacion_clientes.RegistrationCliente;
+
 import java.util.Date;
 
 import inventario.Categorias;
@@ -26,7 +29,12 @@ import java.util.List;
 
 public class SuperAdminGUI extends JFrame {
 
-    private LoaderFerreteria loaderFerreteria = LoaderFerreteria.newFerreteria();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private LoaderFerreteria loaderFerreteria = LoaderFerreteria.newFerreteria();
 
     private JMenuBar menuBar;
     private JPanel cards; // Panel que utiliza CardLayout
@@ -282,7 +290,7 @@ public class SuperAdminGUI extends JFrame {
 
         // Calcula el tamaño total de los vehículos para la matriz de datos
         int totalVehiculos = categorias.stream().mapToInt(categoria -> categoria.getCarros().size()).sum();
-        Object[][] data = new Object[totalVehiculos][4]; // Asume que hay 4 columnas: Placa, Marca, Modelo, Color
+        Object[][] data = new Object[totalVehiculos][7]; // Asume que hay 4 columnas: Placa, Marca, Modelo, Color
 
         // Llena la matriz de datos con la información de los vehículos
         int vehiculoIndex = 0;
@@ -294,13 +302,13 @@ public class SuperAdminGUI extends JFrame {
                 data[vehiculoIndex][3] = carro.getColor(); // Asumiendo que hay un método getColor() en la clase
                 data[vehiculoIndex][4] = carro.getTipo();
                 data[vehiculoIndex][5] = carro.getPorcentaje();
-                data[vehiculoIndex][4] = carro.getEstado();                                          
+                data[vehiculoIndex][6] = carro.getEstado();                                          
                 vehiculoIndex++;
             }
         }
 
         // Define los nombres de las columnas
-        String[] columnNames = { "Placa", "Marca", "Modelo", "Color" };
+        String[] columnNames = { "Placa", "Marca", "Modelo", "Color", "Tipo", "PorcentajeAdicional", "Estado" };
 
         // Crea el JTable con los datos y los nombres de las columnas
         JTable table = new JTable(data, columnNames);

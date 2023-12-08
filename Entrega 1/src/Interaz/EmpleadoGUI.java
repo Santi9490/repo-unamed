@@ -3,6 +3,7 @@ package Interaz;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import aplicacion_clientes.RegistrationCliente;
 import inventario.Categorias;
 
 import java.util.Arrays;

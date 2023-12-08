@@ -4,6 +4,8 @@ import javax.swing.*;
 import procesamiento.LoaderFerreteria;
 import procesamiento.Login;
 import reserva_alquiler.Cliente;
+import aplicacion_clientes.RegistrationCliente;
+import aplicacion_clientes.ClienteGUI;
 import sedes.Empleado;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -12,7 +14,11 @@ import java.awt.event.*;
 
 public class RentACarGUI extends JFrame {
 
-    private Empleado empleado;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Empleado empleado;
     private Cliente cliente;
 
     private JButton registerButton;
@@ -57,7 +63,7 @@ public class RentACarGUI extends JFrame {
         add(carImageLabel);
 
         // Crear botones y mejorar su estilo
-        registerButton = new JButton("Registrarse");
+        registerButton = new JButton("Registrar Cliente");
         styleButton(registerButton);
 
         loginButton = new JButton("Iniciar sesión");

@@ -1,4 +1,4 @@
-package Interaz;
+package aplicacion_clientes;
 
 import javax.swing.*;
 
@@ -8,7 +8,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class RegistrationCliente extends JPanel {
-    private JTextField correoField, contraseniaField, cedulaField, nombreField, datosContactoField,
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField correoField, contraseniaField, cedulaField, nombreField, datosContactoField,
             fechaNacimientoField, nacionalidadField, rutaImagenField,
             numeroLicenciaField, paisExpedicionField, fechaVencimientoField, rutaImagenLicenciaField, tipoTarjetaField,
             bancoField, numeroTarjetaField, cVCField;

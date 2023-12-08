@@ -1,11 +1,14 @@
-package Interaz;
+package aplicacion_clientes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import inventario.Categorias;
 
 import procesamiento.LoaderFerreteria;
+import procesamiento.Login;
 import reserva_alquiler.Alquiler;
 import reserva_alquiler.Cliente;
 import sedes.Sede;
@@ -13,23 +16,34 @@ import sedes.Sede;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class ClienteGUI extends JFrame {
 
-    private LoaderFerreteria loaderFerreteria = LoaderFerreteria.newFerreteria();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private LoaderFerreteria loaderFerreteria = LoaderFerreteria.newFerreteria();
     private Cliente cliente;
 
     private JMenuBar menuBar;
     private JPanel cards; // Panel que utiliza CardLayout
     private CardLayout cardLayout; // El CardLayout en sí
     // Menus
-    private JMenu menuCategorias, menuReservas, menuAlquileres;
+    private JMenu menuCategorias, menuReservas, menuAlquileres, menuVehiculos;
 
     // Items menu Categorias
     private JMenuItem menuItemVerCategoriasPrecios;
@@ -37,19 +51,52 @@ public class ClienteGUI extends JFrame {
     private JMenuItem menuItemReservarVehiculo;
     // Items menu HistorialAlquileres
     private JMenuItem menuItemHisAlquileres;
+    // Items menu Vehiculos
+    private JMenuItem menuItemDiagramaVehiculos;
+    
+    private JButton registerButton;
+    
+    private JButton loginButton;
+    
+    private JLabel titleLabel;
+    
+    private JLabel carImageLabel;
+    
+    Login login = new Login();    
 
     public ClienteGUI(Cliente cliente) {
+        loaderFerreteria.cargarDatos();
         this.cliente = cliente;
-        setTitle("Empleado");
+        setTitle("Cliente");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
+        
         // Configuración de la barra de menú
         menuBar = new JMenuBar();
         menuBar.setFont(new Font("Palatino", Font.BOLD, 20)); // Establece la fuente del texto
         menuBar.setBackground(new Color(227, 72, 45));
         menuBar.setForeground(Color.WHITE);
+
+        registerButton = new JButton("Registrarse");
+        registerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showRegistrationForm();
+            }
+        });
+
+        loginButton = new JButton("Login");
+
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showLoginForm();
+            }
+        });
+
+        menuBar.add(registerButton);
+        menuBar.add(loginButton);
+
+        
 
         // Menú Cliente
         menuCategorias = new JMenu("Categorias");
@@ -79,7 +126,16 @@ public class ClienteGUI extends JFrame {
 
         menuBar.add(menuAlquileres);
 
-        // Inicializar el CardLayout y el panel que lo contiene
+        // Menú Vehiculos
+        menuVehiculos = new JMenu("Vehiculos");
+
+        menuItemDiagramaVehiculos = new JMenuItem("Ver diagrama disponibilidad vehiculos");
+        menuItemDiagramaVehiculos.addActionListener(this::mostrarVehiculos);
+        menuVehiculos.add(menuItemDiagramaVehiculos);
+
+        menuBar.add(menuAlquileres);
+
+     // Inicializar el CardLayout y el panel que lo contiene
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
 
@@ -88,20 +144,39 @@ public class ClienteGUI extends JFrame {
 
         // Panel inicial con mensaje de bienvenida
         JPanel initialPanel = new JPanel(new BorderLayout()); // Utiliza BorderLayout para centrar el mensaje
-        JLabel welcomeLabel = new JLabel("Bienvenido Cliente al Sistema de Gestión de Rent-A-Car",
-                SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Palatino", Font.BOLD, 20)); // Establece la fuente del texto
-        welcomeLabel.setForeground(Color.WHITE);
-        initialPanel.add(welcomeLabel, BorderLayout.CENTER); // Añade el mensaje de bienvenida al panel
+        initialPanel.setBackground(new Color(227, 72, 45));
+        
+        // Título
+        titleLabel = new JLabel("Bienvenido a Ferretería Rent-A-Car", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Palatino", Font.BOLD, 25));
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        initialPanel.add(titleLabel, BorderLayout.CENTER);
 
-        // Agrega el panel inicial al contenedor de cartas con un nombre único
+        // Espaciador
+        initialPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        
+        // Imagen del carro
+        ImageIcon originalIcon = new ImageIcon("datos/imagenes/car-isometric-symbol-color-png.png");
+        // Redimensionar la imagen
+        Image scaledImage = originalIcon.getImage().getScaledInstance(120, 100, Image.SCALE_SMOOTH);
+        
+        
+
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        carImageLabel = new JLabel(scaledIcon);
+        carImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        initialPanel.add(carImageLabel);
+
+        
         cards.add(initialPanel, "Inicio");
+        
+        
 
         // Muestra el panel inicial
         cardLayout.show(cards, "Inicio");
 
         setJMenuBar(menuBar);
-
     }
 
     private void mostrarCategoriasPrecios(ActionEvent e) {
@@ -231,6 +306,7 @@ public class ClienteGUI extends JFrame {
         gbc.gridy = 9;
         gbc.gridwidth = 2;
         btnRegistrarReserva.addActionListener(event -> {
+        	if (cliente!=null) {
             try {
                 int cedula = cliente.getCedula();
                 String categoriaCarro = comboCategoria.getSelectedItem().toString();
@@ -255,6 +331,8 @@ public class ClienteGUI extends JFrame {
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(formularioRegistrarReserva,
                         "Error al registrar la reserva: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }}else {
+            	JOptionPane.showMessageDialog(this, "Inicia Sesión Primero.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         formularioRegistrarReserva.add(btnRegistrarReserva, gbc);
@@ -266,6 +344,46 @@ public class ClienteGUI extends JFrame {
     }
 
     private void mostrarHistorialAlquileres(ActionEvent e) {
+        // Crear el modelo para el JTable
+    	if (cliente!=null) {
+        String[] columnNames = { "ID Alquiler", "Información del Alquiler" };
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        // Obtener los alquileres y añadirlos al modelo del JTable
+        List<Alquiler> alquileres = cliente.getAlquileres();
+        if (alquileres.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Realice un alquiler para ver su historial", "Información",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (int i = 0; i < alquileres.size(); i++) {
+                Alquiler alquiler = alquileres.get(i);
+                String info = alquiler.getInfoAlquilado();
+                model.addRow(new Object[] { i + 1, info });
+            }
+        }
+
+        // Crear el JTable con el modelo
+        JTable tableHistorialAlquileres = new JTable(model);
+        tableHistorialAlquileres.setFillsViewportHeight(true);
+
+        // Permitir que la tabla se desplace si es necesario
+        JScrollPane scrollPane = new JScrollPane(tableHistorialAlquileres);
+
+        // Panel para contener la tabla
+        JPanel panelHistorialAlquileres = new JPanel(new BorderLayout());
+        panelHistorialAlquileres.add(scrollPane, BorderLayout.CENTER);
+
+        // Agrega el panel al CardLayout
+        cards.add(panelHistorialAlquileres, "HistorialAlquileres");
+        cardLayout.show(cards, "HistorialAlquileres");}
+    	else 
+        {
+    		JOptionPane.showMessageDialog(this, "Inicia Sesión Primero.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    private void mostrarVehiculos(ActionEvent e) {
         // Crear el modelo para el JTable
         String[] columnNames = { "ID Alquiler", "Información del Alquiler" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
@@ -297,6 +415,132 @@ public class ClienteGUI extends JFrame {
         // Agrega el panel al CardLayout
         cards.add(panelHistorialAlquileres, "HistorialAlquileres");
         cardLayout.show(cards, "HistorialAlquileres");
+    }
+
+    private void styleButton(JButton button) {
+        button.setFont(new Font("Palatino", Font.BOLD, 14)); // Usar Palatino
+        button.setForeground(Color.WHITE); // Letra blanca
+        button.setBackground(new Color(199, 13, 0)); // Fondo rojo oscuro
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false); // Quitar el borde pintado
+        button.setFocusPainted(false);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setMargin(new Insets(10, 20, 10, 20)); // Margen dentro del botón
+
+        // Usar un borde vacío para forzar el espacio, pero sin pintarlo
+        button.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
+
+        // Agregar un MouseListener para cambiar el aspecto del botón al pasar el mouse
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JButton btn = (JButton) e.getSource();
+                btn.setOpaque(true);
+                btn.setContentAreaFilled(true);
+                btn.setBorderPainted(false);
+                btn.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
+                btn.repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                JButton btn = (JButton) e.getSource();
+                btn.setOpaque(false);
+                btn.setContentAreaFilled(false);
+                btn.setBorderPainted(false);
+                btn.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
+                btn.repaint();
+            }
+        });
+    }
+
+
+    private void showRegistrationForm() {
+        // Crear una instancia del formulario de registro y mostrarlo
+        RegistrationCliente registrationForm = new RegistrationCliente();
+        JDialog registrationDialog = new JDialog(this, "Formulario de Registro", true);
+        registrationDialog.getContentPane().add(registrationForm);
+        registrationDialog.pack();
+        registrationDialog.setLocationRelativeTo(this);
+        registrationDialog.setVisible(true);
+    }
+
+    private void showLoginForm() {
+		login.cargarUsuarios();
+
+        JPanel loginPanel = new JPanel();
+        loginPanel.setLayout(new GridLayout(3, 2, 5, 5));
+        loginPanel.setBackground(new Color(227, 72, 45));
+
+        // Crear la etiqueta para el correo
+        JLabel correoLabel = new JLabel("Correo:");
+        correoLabel.setForeground(Color.WHITE);
+        correoLabel.setFont(new Font("Palatino", Font.BOLD, 12));
+        loginPanel.add(correoLabel);
+
+        JTextField usuarioField = new JTextField();
+        loginPanel.add(usuarioField);
+
+        // Crear la etiqueta para la contraseña
+        JLabel contraseniaLabel = new JLabel("Contraseña:");
+        contraseniaLabel.setForeground(Color.WHITE);
+        contraseniaLabel.setFont(new Font("Palatino", Font.BOLD, 12));
+        loginPanel.add(contraseniaLabel);
+
+        JPasswordField contraseniaField = new JPasswordField();
+        loginPanel.add(contraseniaField);
+
+        JButton loginButton = new JButton("Iniciar Sesión");
+        styleButton(loginButton);
+        loginPanel.add(loginButton);
+
+        JDialog loginDialog = new JDialog(this, "Inicio de Sesión", true);
+        loginDialog.getContentPane().add(loginPanel);
+        loginDialog.pack();
+        loginDialog.setLocationRelativeTo(this);
+
+        loginButton.addActionListener(e -> {
+            String usuario = usuarioField.getText();
+            String correo = correoLabel.getText();
+            String contrasenia = new String(contraseniaField.getPassword());
+
+            if (autenticarUsuario(usuario, contrasenia)) {
+                loginDialog.dispose();
+                mostrarMenuUsuario(usuario, correo);
+            } else {
+                JOptionPane.showMessageDialog(loginDialog, "Credenciales incorrectas.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        loginDialog.setVisible(true);
+    }
+
+    private boolean autenticarUsuario(String usuario, String contrasenia) {
+        return login.UsuarioExist(usuario, contrasenia);
+    }
+
+    private void mostrarMenuUsuario(String usuario, String correo) {
+        String rol = login.getrol(usuario, loaderFerreteria);
+        switch (rol) {
+            case "cliente":
+                cliente = loaderFerreteria.buscarClienteCorreo(correo);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        FlatLightLaf.install();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SwingUtilities.invokeLater(() -> new ClienteGUI(null).setVisible(true));
     }
 
 }

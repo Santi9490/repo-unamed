@@ -1,0 +1,15 @@
+AutoRápido Alquileres;Cll 88 #48-38;Manizales;35646793;10:00;15:00
+CityCar Rentas;Cll 85 #23-45;Barranquilla;32230535;8:00;17:00
+Destino Vehículos;Cll 99 #9-23;Pasto;35414325;7:00;23:00
+TurismoCar Alquiler;Cll 54 #50-16;Villavicencio;3012345678;06:00;20:00
+RuedaLibre Rentas;Cll 19 #15-5;Pasto;3023456789;11:00;23:00
+ViajeSeguro Vehículos;Cll 182 #6-92;Ibagué;3034567890;06:00;20:00
+PaseoCar Rentas;Cll 12 #5-27;Pasto;3045678901;11:00;21:00
+RentaRueda Express;Cll 108 #45-35;Valledupar;3056789012;11:00;17:00
+AutoDestino Servicios;Cll 99 #22-60;Ibagué;3067890123;8:00;18:00
+VíaLibre Alquileres;Cll 124 #17-5;Cali;3078901234;11:00;19:00
+EstiloCar Rentas;Cll 127 #21-10;Cali;3089012345;10:00;17:00
+UrbanoVehículos;Cll 64 #46-64;Cartagena;3090123456;10:00;22:00
+MetaCar Alquiler;Cll 72 #20-93;Villavicencio;3101234567;8:00;17:00
+RutaLista Rentas;Cll 163 #13-79;Ibagué;3112345670;09:00;17:00
+CarroCiudad Alquiler;Cll 182 #1-76;Montería;3123456781;9:00;19:00

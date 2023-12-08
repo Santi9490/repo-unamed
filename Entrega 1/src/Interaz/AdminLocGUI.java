@@ -3,6 +3,7 @@ package Interaz;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import aplicacion_clientes.RegistrationCliente;
 import inventario.Categorias;
 import inventario.Vehiculo;
 
@@ -30,7 +31,11 @@ import java.util.stream.Collectors;
 
 public class AdminLocGUI extends JFrame {
 
-    private LoaderFerreteria loaderFerreteria = LoaderFerreteria.newFerreteria();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 935476521344484866L;
+	private LoaderFerreteria loaderFerreteria = LoaderFerreteria.newFerreteria();
     private Empleado empleado;
 
     private JMenuBar menuBar;
