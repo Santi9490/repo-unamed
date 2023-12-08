@@ -1,0 +1,13 @@
+Para usar la aplicacion toca tener en cuenta
+Al registrarse, creas una cuenta de cliente.
+Para crear una cuenta de empelado, administrador local. Se hace directamente desde la cuenta del
+SuperAdmin
+
+User: superadmin
+Pass: supadmin123
+
+Con esa cuenta pueden hacer lo que quieran. Crear los empleados y ver como el el menu desde ese punto de vista.
+Tambien en el archivo usuarios se encuentra los correos y contraseñas de algunos empleados ya creados previamente.
+
+RentaCarGUI es la clase que tiene el metodo main.
+al registrarse un nuevo usuario se deben salir de la aplicacion y volver a inciar para poder iniciar sesion

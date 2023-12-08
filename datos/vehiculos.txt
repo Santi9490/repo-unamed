@@ -1,1 +1,52 @@
-ABC123;Toyota;Corolla;Blanco;5;Automático;Sedán;AutoRápido AlquileresDEF456;Hyundai;Tucson;Negro;5;Automático;SUV;CityCar RentasGHI789;Ford;Mustang;Rojo;4;Mecánico;Muscle car;Destino VehículosJKL012;Tesla;Model 3;Azul;5;Automático;Eléctrico;TurismoCar AlquilerMNO345;Chevrolet;Spark;Gris;4;Mecánico;Compacto;RuedaLibre RentasPQR678;BMW;X5;Negro;5;Automático;SUV de lujo;ViajeSeguro VehículosSTU901;Audi;A3;Blanco;5;Automático;Hatchback;PaseoCar RentasVWX234;Jeep;Wrangler;Verde;4;Mecánico;Off-road;RentaRueda ExpressYZA567;Honda;Civic;Azul;5;Mecánico;Sedán;AutoDestino ServiciosBCD890;Mercedes-Benz;CLA;Negro;5;Automático;Coupé;VíaLibre AlquileresEFG123;Kia;Sportage;Blanco;5;Automático;Crossover;EstiloCar RentasHIJ456;Volkswagen;Golf;Rojo;5;Mecánico;Deportivo compacto;UrbanoVehículosKLM789;Nissan;Frontier;Gris;4;Mecánico;Pickup;MetaCar AlquilerNOP012;Toyota;Sienna;Azul;7;Automático;Furgoneta;RutaLista RentasQRS345;Ford;F-150;Negro;5;Automático;Pickup;CarroCiudad AlquilerTUV678;Chevrolet;Camaro;Amarillo;4;Automático;Muscle car;AutoRápido AlquileresWXY901;Mazda;CX-5;Rojo;5;Automático;SUV;CityCar RentasZAB234;BMW;i8;Azul;4;Automático;Deportivo;Destino VehículosCDE567;Audi;Q7;Blanco;7;Automático;SUV de lujo;TurismoCar AlquilerFGH890;Toyota;Prius;Verde;5;Automático;Híbrido;RuedaLibre RentasIJK123;Hyundai;Santa Fe;Gris;5;Automático;SUV;ViajeSeguro VehículosLMN456;Mercedes-Benz;E-Class;Negro;5;Automático;Sedán de lujo;PaseoCar RentasOPQ789;Ford;Explorer;Blanco;7;Automático;SUV;RentaRueda ExpressRST012;Nissan;370Z;Rojo;2;Mecánico;Coupé;AutoDestino ServiciosUVW345;Volkswagen;Beetle;Azul;4;Automático;Compacto;VíaLibre AlquileresXYZ678;Porsche;911;Negro;4;Automático;Deportivo;EstiloCar RentasABC234;Jeep;Cherokee;Blanco;5;Automático;SUV;UrbanoVehículosDEF901;Hyundai;Elantra;Rojo;5;Mecánico;Sedán;MetaCar AlquilerGHI345;Mazda;MX-5;Azul;2;Mecánico;Convertible;RutaLista RentasJKL567;Chevrolet;Equinox;Gris;5;Automático;SUV;CarroCiudad AlquilerMNO789;Toyota;RAV4;Verde;5;Automático;Crossover;AutoRápido AlquileresPQR012;Ford;Ranger;Blanco;4;Mecánico;Pickup;CityCar RentasSTU345;Honda;Accord;Negro;5;Automático;Sedán;Destino VehículosVWX678;Kia;Sorento;Azul;5;Automático;SUV;TurismoCar AlquilerYZA012;Audi;TT;Rojo;4;Automático;Coupé;RuedaLibre RentasBCD345;Volkswagen;Passat;Blanco;5;Automático;Familiar;ViajeSeguro VehículosEFG678;Nissan;Leaf;Verde;5;Automático;Eléctrico;PaseoCar RentasHIJ901;Mercedes-Benz;G-Class;Negro;5;Automático;Lujo;RentaRueda ExpressKLM012;Hyundai;Ioniq;Azul;5;Automático;Híbrido;AutoDestino ServiciosNOP345;Ford;Escape;Rojo;5;Automático;Crossover;VíaLibre AlquileresQRS678;Toyota;4Runner;Blanco;5;Automático;SUV;EstiloCar RentasTUV901;Chevrolet;Suburban;Negro;7;Automático;Camioneta;UrbanoVehículosWXY234;Jeep;Compass;Rojo;5;Automático;Crossover;MetaCar AlquilerZAB567;Honda;Fit;Azul;5;Mecánico;Compacto;RutaLista RentasCDE890;Mazda;3;Blanco;5;Automático;Compacto;CarroCiudad AlquilerFGH123;Toyota;Highlander;Negro;7;Automático;SUV;AutoRápido AlquileresIJK456;Ford;Focus;Rojo;5;Mecánico;Compacto;CityCar RentasLMN789;Nissan;Altima;Azul;5;Automático;Sedán;Destino VehículosOPQ012;Kia;Optima;Blanco;5;Automático;Sedán;TurismoCar AlquilerRST345;Chevrolet;Impala;Negro;5;Automático;Familiar;RuedaLibre RentasELR987;Mercedes;Bonito;azul;4;Mecanico;Sedán;CarroCiudad Alquiler
+ABC123;Toyota;Corolla;Blanco;5;Automático;Sedán;AutoRápido Alquileres;Familiar;0
+DEF456;Hyundai;Tucson;Negro;5;Automático;SUV;CityCar Rentas;Todo Terreno;10
+GHI789;Ford;Mustang;Rojo;4;Mecánico;Muscle car;Destino Vehículos;Deportivo;11
+JKL012;Tesla;Model 3;Azul;5;Automático;Eléctrico;TurismoCar Alquiler;Ecológico;1
+MNO345;Chevrolet;Spark;Gris;4;Mecánico;Compacto;RuedaLibre Rentas;Urbano;2
+PQR678;BMW;X5;Negro;5;Automático;SUV de lujo;ViajeSeguro Vehículos;Lujo;5
+STU901;Audi;A3;Blanco;5;Automático;Hatchback;PaseoCar Rentas;Compacto;3
+VWX234;Jeep;Wrangler;Verde;4;Mecánico;Off-road;RentaRueda Express;Aventura;3
+YZA567;Honda;Civic;Azul;5;Mecánico;Sedán;AutoDestino Servicios;Familiar;6
+BCD890;Mercedes-Benz;CLA;Negro;5;Automático;Coupé;VíaLibre Alquileres;Deportivo;14
+EFG123;Kia;Sportage;Blanco;5;Automático;Crossover;EstiloCar Rentas;Todo Terreno;7
+HIJ456;Volkswagen;Golf;Rojo;5;Mecánico;Deportivo compacto;UrbanoVehículos;Deportivo;5
+KLM789;Nissan;Frontier;Gris;4;Mecánico;Pickup;MetaCar Alquiler;Trabajo;0
+NOP012;Toyota;Sienna;Azul;7;Automático;Furgoneta;RutaLista Rentas;Familiar;5
+QRS345;Ford;F-150;Negro;5;Automático;Pickup;CarroCiudad Alquiler;Trabajo;9
+TUV678;Chevrolet;Camaro;Amarillo;4;Automático;Muscle car;AutoRápido Alquileres;Deportivo;9
+WXY901;Mazda;CX-5;Rojo;5;Automático;SUV;CityCar Rentas;Todo Terreno;2
+ZAB234;BMW;i8;Azul;4;Automático;Deportivo;Destino Vehículos;Deportivo de Lujo;1
+CDE567;Audi;Q7;Blanco;7;Automático;SUV de lujo;TurismoCar Alquiler;Lujo;5
+FGH890;Toyota;Prius;Verde;5;Automático;Híbrido;RuedaLibre Rentas;Ecológico;6
+IJK123;Hyundai;Santa Fe;Gris;5;Automático;SUV;ViajeSeguro Vehículos;Todo Terreno;12
+LMN456;Mercedes-Benz;E-Class;Negro;5;Automático;Sedán de lujo;PaseoCar Rentas;Lujo;1
+OPQ789;Ford;Explorer;Blanco;7;Automático;SUV;RentaRueda Express;Familiar;8
+RST012;Nissan;370Z;Rojo;2;Mecánico;Coupé;AutoDestino Servicios;Deportivo;2
+UVW345;Volkswagen;Beetle;Azul;4;Automático;Compacto;VíaLibre Alquileres;Urbano;14
+XYZ678;Porsche;911;Negro;4;Automático;Deportivo;EstiloCar Rentas;Deportivo de Lujo;4
+ABC234;Jeep;Cherokee;Blanco;5;Automático;SUV;UrbanoVehículos;Todo Terreno;12
+DEF901;Hyundai;Elantra;Rojo;5;Mecánico;Sedán;MetaCar Alquiler;Urbano;14
+GHI345;Mazda;MX-5;Azul;2;Mecánico;Convertible;RutaLista Rentas;Deportivo;13
+JKL567;Chevrolet;Equinox;Gris;5;Automático;SUV;CarroCiudad Alquiler;Familiar;13
+MNO789;Toyota;RAV4;Verde;5;Automático;Crossover;AutoRápido Alquileres;Todo Terreno;13
+PQR012;Ford;Ranger;Blanco;4;Mecánico;Pickup;CityCar Rentas;Trabajo;14
+STU345;Honda;Accord;Negro;5;Automático;Sedán;Destino Vehículos;Familiar;13
+VWX678;Kia;Sorento;Azul;5;Automático;SUV;TurismoCar Alquiler;Todo Terreno;12
+YZA012;Audi;TT;Rojo;4;Automático;Coupé;RuedaLibre Rentas;Deportivo;15
+BCD345;Volkswagen;Passat;Blanco;5;Automático;Familiar;ViajeSeguro Vehículos;Familiar;3
+EFG678;Nissan;Leaf;Verde;5;Automático;Eléctrico;PaseoCar Rentas;Ecológico;2
+HIJ901;Mercedes-Benz;G-Class;Negro;5;Automático;Lujo;RentaRueda Express;Lujo;5
+KLM012;Hyundai;Ioniq;Azul;5;Automático;Híbrido;AutoDestino Servicios;Ecológico;9
+NOP345;Ford;Escape;Rojo;5;Automático;Crossover;VíaLibre Alquileres;Todo Terreno;5
+QRS678;Toyota;4Runner;Blanco;5;Automático;SUV;EstiloCar Rentas;Aventura;6
+TUV901;Chevrolet;Suburban;Negro;7;Automático;Camioneta;UrbanoVehículos;Familiar;8
+WXY234;Jeep;Compass;Rojo;5;Automático;Crossover;MetaCar Alquiler;Todo Terreno;17
+ZAB567;Honda;Fit;Azul;5;Mecánico;Compacto;RutaLista Rentas;Urbano;2
+CDE890;Mazda;3;Blanco;5;Automático;Compacto;CarroCiudad Alquiler;Urbano;4
+FGH123;Toyota;Highlander;Negro;7;Automático;SUV;AutoRápido Alquileres;Familiar;15
+IJK456;Ford;Focus;Rojo;5;Mecánico;Compacto;CityCar Rentas;Urbano;8
+LMN789;Nissan;Altima;Azul;5;Automático;Sedán;Destino Vehículos;Familiar;7
+OPQ012;Kia;Optima;Blanco;5;Automático;Sedán;TurismoCar Alquiler;Familiar;6
+RST345;Chevrolet;Impala;Negro;5;Automático;Familiar;RuedaLibre Rentas;Familiar;12
+ELR987;Mercedes;Bonito;azul;4;Mecanico;Sedán;CarroCiudad Alquiler;Deportivo;3
+
