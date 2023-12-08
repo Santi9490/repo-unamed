@@ -1,0 +1,19 @@
+01/02/23;01/05/23;12:00;14:00;AutoRápido Alquileres;CityCar Rentas;12345678;Compacto;Seguro a Terceros;Seguro de Robo
+01/06/23;01/09/23;12:00;14:00;CityCar Rentas;Destino Vehículos;23456789;Sedán;Seguro Todo Riesgo;Seguro de Asistencia en Carretera
+02/03/23;02/07/23;12:00;14:00;Destino Vehículos;TurismoCar Alquiler;34567890;Lujo;Seguro contra Desastres Naturales;Seguro de Responsabilidad Civil Ampliada
+02/08/23;02/12/23;12:00;14:00;TurismoCar Alquiler;RuedaLibre Rentas;45678901;Deportivo;Seguro de Cristales;Seguro de Equipamiento Adicional
+03/04/23;03/08/23;12:00;14:00;RuedaLibre Rentas;ViajeSeguro Vehículos;56789012;SUV;Seguro contra Daños Animales;Seguro de Coche de Cortesía
+03/10/23;03/15/23;12:00;14:00;ViajeSeguro Vehículos;PaseoCar Rentas;67890123;Camioneta;Seguro de Robo;Seguro Todo Riesgo
+04/02/23;04/06/23;12:00;14:00;PaseoCar Rentas;RentaRueda Express;78901234;Furgoneta;Seguro de Asistencia en Carretera;Seguro contra Desastres Naturales
+04/07/23;04/11/23;12:00;14:00;RentaRueda Express;AutoDestino Servicios;89012345;Eléctrico;Seguro de Responsabilidad Civil Ampliada;Seguro de Cristales
+05/03/23;05/07/23;12:00;14:00;AutoDestino Servicios;VíaLibre Alquileres;90123456;Híbrido;Seguro de Equipamiento Adicional;Seguro contra Daños Animales
+05/08/23;05/12/23;12:00;14:00;VíaLibre Alquileres;EstiloCar Rentas;101234567;Convertible;Seguro de Coche de Cortesía;Seguro a Terceros
+06/04/23;06/08/23;12:00;14:00;EstiloCar Rentas;UrbanoVehículos;112345678;Coupé;Seguro de Robo;Seguro Todo Riesgo
+06/09/23;06/13/23;12:00;14:00;UrbanoVehículos;MetaCar Alquiler;122345679;Hatchback;Seguro de Asistencia en Carretera;Seguro contra Desastres Naturales
+07/05/23;07/09/23;12:00;14:00;MetaCar Alquiler;RutaLista Rentas;142345671;Familiar;Seguro de Responsabilidad Civil Ampliada;Seguro de Cristales
+07/10/23;07/14/23;12:00;14:00;RutaLista Rentas;CarroCiudad Alquiler;132345670;Crossover;Seguro de Equipamiento Adicional;Seguro contra Daños Animales
+08/06/23;08/10/23;12:00;14:00;CarroCiudad Alquiler;AutoRápido Alquileres;152345672;Muscle car;Seguro de Coche de Cortesía;Seguro a Terceros
+09/07/23;09/11/23;12:00;14:00;CityCar Rentas;Destino Vehículos;172345674;Pickup;Seguro de Asistencia en Carretera;Seguro contra Desastres Naturales
+09/12/23;09/16/23;12:00;14:00;Destino Vehículos;TurismoCar Alquiler;182345675;Off-road;Seguro de Responsabilidad Civil Ampliada;Seguro de Cristales
+10/08/23;10/12/23;12:00;14:00;TurismoCar Alquiler;RuedaLibre Rentas;192345676;Sedán de lujo;Seguro de Equipamiento Adicional;Seguro contra Daños Animales
+10/13/23;10/17/23;12:00;14:00;RuedaLibre Rentas;ViajeSeguro Vehículos;202345677;Deportivo compacto;Seguro de Coche de Cortesía;Seguro a Terceros01/02/23;01/05/23;Thu Jan 01 12:00:00 COT 1970;Thu Jan 01 14:00:00 COT 1970;AutoRápido Alquileres;CityCar Rentas;12345678Compacto
