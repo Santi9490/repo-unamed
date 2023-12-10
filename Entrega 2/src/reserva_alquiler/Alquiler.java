@@ -288,4 +288,9 @@ public class Alquiler {
 		}
 		return precio;
 	}
+
+	public Object getVehiculo() {
+		
+		return carroAsignado;
+	}
 }

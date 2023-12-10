@@ -410,7 +410,7 @@ public class Empleado {
 	 * @param cedulaCliente Cédula del cliente que realiza la devolución.
 	 * @param placa Placa del vehículo que se está devolviendo.
 	 */
-	public void registrarDevolucion(int cedulaCliente, String placa) {
+	public void registrarDevolucion(int cedulaCliente, String placa, float exedente) {
 		for (Cliente cliente : clientes) {
 			if (cliente.getCedula() == cedulaCliente) {
 				for (Alquiler alqui : cliente.getAlquileres()) {

@@ -9,6 +9,7 @@ import sedes.Sede;
 public class Reserva extends Alquiler {
 
 	private Date horaLLegada;
+	private String hora_llegada;
 
 	/**
 	 * contructor de la clase reserva, reutiliza el constructor de la clase alquiler
@@ -29,6 +30,7 @@ public class Reserva extends Alquiler {
 			Sede lugarDejada, Cliente cliente, Categorias categoriaCarro, String horaLLegada) {
 		super(fechaInicio, fechaFinal, inicioHora, finHora, lugarRecogida, lugarDejada, cliente, categoriaCarro);
 		this.horaLLegada = Fecha.convertirHora(horaLLegada);
+		this.hora_llegada= horaLLegada;
 		if (!Fecha.isIn(lugarRecogida.getHorasAtencion(), this.horaLLegada)) {
 			throw new IllegalArgumentException("La hora de llegada no esta dentro del horario de atencion de la sede");
 		}
@@ -47,6 +49,10 @@ public class Reserva extends Alquiler {
 				getCliente().getInfo(), getCategoriaCarro().getNombre(), getFechas()[0], getFechas()[1],
 				getLugarDejada().getInfoSede());
 		return texto;
+	}
+	
+	public String getHoraLlegada() {
+		return hora_llegada;
 	}
 
 }

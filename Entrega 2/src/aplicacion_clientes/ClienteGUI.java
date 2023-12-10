@@ -6,7 +6,12 @@ import javax.swing.table.DefaultTableModel;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import inventario.Categorias;
-
+import pagos.CreditCardInfo;
+import pagos.PayPalGateway;
+import pagos.PayUGateway;
+import pagos.PaymentGateway;
+import pagos.PaymentInfo;
+import pagos.PaymentResult;
 import procesamiento.LoaderFerreteria;
 import procesamiento.Login;
 import reserva_alquiler.Alquiler;
@@ -28,7 +33,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ClienteGUI extends JFrame {
 
@@ -305,6 +312,13 @@ public class ClienteGUI extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 9;
         gbc.gridwidth = 2;
+
+        JButton btnRegistrarpago = new JButton("Registrar Pago");
+        gbc.gridy = 10; 
+        formularioRegistrarReserva.add(btnRegistrarpago, gbc);
+        btnRegistrarpago.addActionListener(event -> {
+            mostrarFormularioPago(0);
+        });
         btnRegistrarReserva.addActionListener(event -> {
         	if (cliente!=null) {
             try {
@@ -323,8 +337,8 @@ public class ClienteGUI extends JFrame {
                 // Llamada al método que registra la reserva
                 int precio = loaderFerreteria.registrarReserva(fechaInicio, fechaFinal, inicioHora, finHora,
                         lugarRecogida, lugarDejada, cedula, categoriaCarro, horaLlegada);
-                JOptionPane.showMessageDialog(formularioRegistrarReserva, "Reserva registrada. Precio: " + precio,
-                        "Reserva Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                // Abrir la ventana de pago con el precio obtenido
+                
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(formularioRegistrarReserva, "Formato de cédula incorrecto.", "Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -336,12 +350,97 @@ public class ClienteGUI extends JFrame {
             }
         });
         formularioRegistrarReserva.add(btnRegistrarReserva, gbc);
+        formularioRegistrarReserva.add(btnRegistrarpago);
 
         // Agrega el panel al CardLayout
         cards.add(formularioRegistrarReserva, "RegistrarReserva");
         cardLayout.show(cards, "RegistrarReserva");
 
     }
+
+    private void mostrarFormularioPago(double precioReserva) {
+        JDialog ventanaPago = new JDialog(this, "Procesar Pago", true);
+        ventanaPago.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Campos para los detalles de la tarjeta de crédito
+        JTextField fieldNumeroTarjeta = new JTextField(16);
+        JTextField fieldNombreTitular = new JTextField(20);
+        JTextField fieldFechaExpiracion = new JTextField(5);
+        JTextField fieldCVV = new JTextField(3);
+
+        // Agrega los campos y etiquetas a la ventana de pago
+        int row = 0;
+        ventanaPago.add(new JLabel("Número de Tarjeta:"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldNumeroTarjeta, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("Nombre del Titular:"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldNombreTitular, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("Fecha de Expiración (MM/AA):"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldFechaExpiracion, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("CVV:"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldCVV, gbc);
+
+        // ComboBox para seleccionar la pasarela de pago
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("Pasarela de Pago:"), gbc);
+        gbc.gridx = 1;
+        JComboBox<String> comboPasarelaPago = new JComboBox<>(new String[] {"PayU", "PayPal"});
+        ventanaPago.add(comboPasarelaPago, gbc);
+
+        // Botón para procesar el pago
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        gbc.gridwidth = 2;
+        JButton btnProcesarPago = new JButton("Procesar Pago");
+        ventanaPago.add(btnProcesarPago, gbc);
+
+        btnProcesarPago.addActionListener(e -> {
+            String numeroTarjeta = fieldNumeroTarjeta.getText();
+            String nombreTitular = fieldNombreTitular.getText();
+            String fechaExpiracion = fieldFechaExpiracion.getText();
+            String cvv = fieldCVV.getText();
+            String pasarelaSeleccionada = (String) comboPasarelaPago.getSelectedItem();
+
+            CreditCardInfo creditCardInfo = new CreditCardInfo(numeroTarjeta, nombreTitular, fechaExpiracion, cvv);
+            PaymentInfo paymentInfo = new PaymentInfo(precioReserva, "COP", UUID.randomUUID().toString());
+
+            PaymentGateway paymentGateway;
+            if ("PayU".equals(pasarelaSeleccionada)) {
+                paymentGateway = new PayUGateway();
+            } else {
+                paymentGateway = new PayPalGateway();
+            }
+
+            PaymentResult result = paymentGateway.processPayment(creditCardInfo, paymentInfo);
+            if (result.isSuccess()) {
+                JOptionPane.showMessageDialog(ventanaPago, "Pago exitoso: " + result.getMessage(), "Pago Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(ventanaPago, "Error en el pago: " + result.getMessage(), "Error de Pago", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        ventanaPago.pack();
+        ventanaPago.setLocationRelativeTo(this);
+        ventanaPago.setVisible(true);
+    }
+
+    
 
     private void mostrarHistorialAlquileres(ActionEvent e) {
         // Crear el modelo para el JTable
@@ -525,7 +624,8 @@ public class ClienteGUI extends JFrame {
         String rol = login.getrol(usuario, loaderFerreteria);
         switch (rol) {
             case "cliente":
-                cliente = loaderFerreteria.buscarClienteCorreo(correo);
+                List<Cliente> clientes = loaderFerreteria.getClientes();
+                cliente = clientes.get(0);
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);

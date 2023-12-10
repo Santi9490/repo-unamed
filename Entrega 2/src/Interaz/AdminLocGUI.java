@@ -6,6 +6,12 @@ import javax.swing.table.DefaultTableModel;
 import aplicacion_clientes.RegistrationCliente;
 import inventario.Categorias;
 import inventario.Vehiculo;
+import pagos.CreditCardInfo;
+import pagos.PayPalGateway;
+import pagos.PayUGateway;
+import pagos.PaymentGateway;
+import pagos.PaymentInfo;
+import pagos.PaymentResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +33,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class AdminLocGUI extends JFrame {
@@ -626,8 +633,7 @@ public class AdminLocGUI extends JFrame {
                 // Llamada al método que registra la reserva
                 int precio = loaderFerreteria.registrarReserva(fechaInicio, fechaFinal, inicioHora, finHora,
                         lugarRecogida, lugarDejada, cedula, categoriaCarro, horaLlegada);
-                JOptionPane.showMessageDialog(formularioRegistrarReserva, "Reserva registrada. Precio: " + precio,
-                        "Reserva Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                mostrarFormularioPago(precio);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(formularioRegistrarReserva, "Formato de cédula incorrecto.", "Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -642,6 +648,88 @@ public class AdminLocGUI extends JFrame {
         cards.add(formularioRegistrarReserva, "RegistrarReserva");
         cardLayout.show(cards, "RegistrarReserva");
 
+    }
+
+    private void mostrarFormularioPago(double precioReserva) {
+        JDialog ventanaPago = new JDialog(this, "Procesar Pago", true);
+        ventanaPago.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Campos para los detalles de la tarjeta de crédito
+        JTextField fieldNumeroTarjeta = new JTextField(16);
+        JTextField fieldNombreTitular = new JTextField(20);
+        JTextField fieldFechaExpiracion = new JTextField(5);
+        JTextField fieldCVV = new JTextField(3);
+
+        // Agrega los campos y etiquetas a la ventana de pago
+        int row = 0;
+        ventanaPago.add(new JLabel("Número de Tarjeta:"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldNumeroTarjeta, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("Nombre del Titular:"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldNombreTitular, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("Fecha de Expiración (MM/AA):"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldFechaExpiracion, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("CVV:"), gbc);
+        gbc.gridx = 1;
+        ventanaPago.add(fieldCVV, gbc);
+
+        // ComboBox para seleccionar la pasarela de pago
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        ventanaPago.add(new JLabel("Pasarela de Pago:"), gbc);
+        gbc.gridx = 1;
+        JComboBox<String> comboPasarelaPago = new JComboBox<>(new String[] {"PayU", "PayPal"});
+        ventanaPago.add(comboPasarelaPago, gbc);
+
+        // Botón para procesar el pago
+        gbc.gridx = 0;
+        gbc.gridy = ++row;
+        gbc.gridwidth = 2;
+        JButton btnProcesarPago = new JButton("Procesar Pago");
+        ventanaPago.add(btnProcesarPago, gbc);
+
+        btnProcesarPago.addActionListener(e -> {
+            String numeroTarjeta = fieldNumeroTarjeta.getText();
+            String nombreTitular = fieldNombreTitular.getText();
+            String fechaExpiracion = fieldFechaExpiracion.getText();
+            String cvv = fieldCVV.getText();
+            String pasarelaSeleccionada = (String) comboPasarelaPago.getSelectedItem();
+
+            CreditCardInfo creditCardInfo = new CreditCardInfo(numeroTarjeta, nombreTitular, fechaExpiracion, cvv);
+            PaymentInfo paymentInfo = new PaymentInfo(precioReserva, "COP", UUID.randomUUID().toString());
+
+            PaymentGateway paymentGateway;
+            if ("PayU".equals(pasarelaSeleccionada)) {
+                paymentGateway = new PayUGateway();
+            } else {
+                paymentGateway = new PayPalGateway();
+            }
+
+            PaymentResult result = paymentGateway.processPayment(creditCardInfo, paymentInfo);
+            if (result.isSuccess()) {
+                JOptionPane.showMessageDialog(ventanaPago, "Pago exitoso: " + result.getMessage(), "Pago Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(ventanaPago, "Error en el pago: " + result.getMessage(), "Error de Pago", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        ventanaPago.pack();
+        ventanaPago.setLocationRelativeTo(this);
+        ventanaPago.setVisible(true);
     }
 
     private void mostrarListarReservas(ActionEvent e) {
@@ -870,8 +958,6 @@ public class AdminLocGUI extends JFrame {
 
                 loaderFerreteria.registrarAlquiler(fechaInicio, fechaFinal, inicioHora, finHora, lugarRecogida,
                         lugarDejada, cedulaCliente, categoriaCarro, seguros);
-                JOptionPane.showMessageDialog(formularioRegistrarAlquiler, "Alquiler registrado exitosamente.",
-                        "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(formularioRegistrarAlquiler,
                         "Error al registrar el alquiler: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -942,10 +1028,17 @@ public class AdminLocGUI extends JFrame {
         panelPlaca.add(new JLabel("Placa del Vehículo:"));
         JTextField fieldPlaca = new JTextField(10);
         panelPlaca.add(fieldPlaca);
+        
+        // Panel para el exedente
+        JPanel panelExedente = new JPanel();
+        panelExedente.add(new JLabel("Exedente Pagado:"));
+        JTextField fieldExedente= new JTextField(10);
+        panelPlaca.add(fieldExedente);
 
         // Agrega los paneles al formulario
         formularioFinalizarAlquiler.add(panelCedula, BorderLayout.NORTH);
         formularioFinalizarAlquiler.add(panelPlaca, BorderLayout.CENTER);
+        formularioFinalizarAlquiler.add(panelExedente, BorderLayout.SOUTH);
 
         // Botón para finalizar el alquiler
         JButton btnFinalizarAlquiler = new JButton("Finalizar Alquiler");
@@ -958,7 +1051,8 @@ public class AdminLocGUI extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                loaderFerreteria.registrarDevolucion(cedulaCliente, placa);
+                float exedente= Float.parseFloat(fieldExedente.getText().trim());
+                loaderFerreteria.registrarDevolucion(cedulaCliente, placa, exedente);
                 JOptionPane.showMessageDialog(this, "Devolución registrada exitosamente.", "Registro Exitoso",
                         JOptionPane.INFORMATION_MESSAGE);
                 // Limpia los campos después del registro

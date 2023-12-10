@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import inventario.Categorias;
+import inventario.Mantenimiento;
 import inventario.Vehiculo;
 import reserva_alquiler.Alquiler;
 import reserva_alquiler.Cliente;
@@ -515,8 +516,8 @@ public class LoaderFerreteria {
      * @param cedulaCliente número de cédula del cliente que devuelve el vehículo
      * @param placa         placa del vehículo devuelto
      */
-    public void registrarDevolucion(int cedulaCliente, String placa) {
-        empleado.registrarDevolucion(cedulaCliente, placa);
+    public void registrarDevolucion(int cedulaCliente, String placa, float exedente) {
+        empleado.registrarDevolucion(cedulaCliente, placa, exedente);
         alquileres = supAdmin.getAlquileres();
         guardar_eliminado();
     }
@@ -569,6 +570,14 @@ public class LoaderFerreteria {
 
     public List<Seguros> getSeguros() {
         return seguros;
+    }
+
+    public List<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
     }
 
     // Busqueda
@@ -1252,5 +1261,9 @@ public class LoaderFerreteria {
     public AdministradorLocal traer_admin_local() {
         return adminloc;
     }
+
+	public List<Mantenimiento> getMantenimientos() {
+		return adminloc.getMantenimientos();
+	}
 
 }
